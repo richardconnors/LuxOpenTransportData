@@ -26,23 +26,32 @@ for i = 1:N
   Sinfo{i,2} = string({S(i).StopLocation.productAtStop.line});
 end
 
+depTable = table('Size',[0,6], 'VariableNames',{'StopName', 'Date', 'TimeofReq', 'DepTime', 'Line', 'Status'},...
+  'VariableTypes',{'string','string','string','string','string','string'});
 for i = 1:N
-% get live data for each stop in turn
-stopID = Sinfo{i,1}; % taken from inside Stops struct above
-baseRealTimeDep = 'https://cdt.hafas.de/opendata/apiserver/departureBoard?accessId=<API-KEY>&lang=en&id=<THIS_STOP>&format=json';
-timeReq = strrep(baseRealTimeDep,'<API-KEY>',api_key);
-timeReq = strrep(timeReq,'<THIS_STOP>',stopID);
-Deps = webread(timeReq);
+  % get live data for each stop in turn
+  stopID = Sinfo{i,1}; % taken from inside Stops struct above
+  baseRealTimeDep = 'https://cdt.hafas.de/opendata/apiserver/departureBoard?accessId=<API-KEY>&lang=en&id=<THIS_STOP>&format=json';
+  timeReq = strrep(baseRealTimeDep,'<API-KEY>',api_key);
+  timeReq = strrep(timeReq,'<THIS_STOP>',stopID);
+  thisStopDeps = webread(timeReq);
+  currentTime = datestr(now, 'HH:MM:SS');
 
+  % find and store useful data
+  m = length(thisStopDeps.Departure);
+  for j = 1:m
+    
+    thisD = thisStopDeps.Departure{j};
+    thisName = thisD.stop;
+    thisDate = thisD.date;
+    thisTime = thisD.time;
+    thisL = thisD.Product.line;
+    thisState = thisD.JourneyStatus;
 
-% find and store useful data
-m = length(Deps.Departure);
-for j = 1:m
-thisD = Deps.Departure{j}
-
-
-
-
-
+    newRow = {thisName, thisDate, currentTime, thisTime, thisL, thisState};
+    depTable = [depTable; newRow];
+  end
 end
-end
+
+% Display the final table
+disp(depTable);
