@@ -1,0 +1,88 @@
+<application xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd">
+<resources base="https://cdt.hafas.de/opendata/apiserver/">
+<resource path="location.nearbystops">
+<method name="GET">
+<request>
+<param name="accessId" required="true" style="query" type="xsd:string">
+<doc>
+Access ID for identifying the requesting client.
+</doc>
+</param>
+<param name="requestId" required="false" style="query" type="xsd:string">
+<doc>
+Request ID for identifying the request.
+</doc>
+</param>
+<param name="format" required="false" style="query" type="xsd:string">
+<doc>
+Requested response format. If not set, the Accept-Header is used. If both are missing application/xml is used
+</doc>
+</param>
+<param name="jsonpCallback" required="false" style="query" type="xsd:string">
+<doc>
+Requests the JSON response data is wrapped into a JavaScript function with that name.
+</doc>
+</param>
+<param default="deu" name="lang" required="false" style="query" type="xsd:string">
+<doc>
+The language of the journey planer.
+</doc>
+</param>
+<param name="originCoordLat" required="true" style="query" type="xsd:string">
+<doc>
+Latitude of centre coordinate.
+</doc>
+</param>
+<param name="originCoordLong" required="true" style="query" type="xsd:string">
+<doc>
+Longitude of centre coordinate.
+</doc>
+</param>
+<param default="1000" name="r" required="false" style="query" type="xsd:int">
+<doc>
+Search radius in meter around the given coordinate if any.
+</doc>
+</param>
+<param default="10" name="maxNo" required="false" style="query" type="xsd:int">
+<doc>
+Maximum number of returned stops. Range from 1 to 5000.
+</doc>
+</param>
+<param default="S" name="type" required="false" style="query" type="xsd:string">
+<doc>
+Type filter for location types.
+</doc>
+</param>
+<param name="locationSelectionMode" required="false" style="query" type="xsd:string">
+<doc>
+Selection mode for locations.
+</doc>
+</param>
+<param name="products" required="false" style="query" type="xsd:int">
+<doc>
+Decimal value defining the product classes to be included in the search. It represents a bitmask combining bit number of a product as defined in the HAFAS raw data file zugart.
+</doc>
+</param>
+<param name="meta" required="false" style="query" type="xsd:string">
+<doc>
+Filter by a predefined meta filter. If the rules of the predefined filter should not be negated, put ! in front of it.
+</doc>
+</param>
+<param name="sattributes" required="false" style="query" type="xsd:string">
+<doc>
+Filter trips by one or more station attribute codes of a journey. Multiple attribute codes are separated by comma. If the attribute should not be part of the be trip, negate it by putting ! in front of it.
+</doc>
+</param>
+<param name="sinfotexts" required="false" style="query" type="xsd:string">
+<doc>
+Filter locations by one or more station infotext codes and values. Multiple attribute codes are separated by comma the value by pipe |.
+</doc>
+</param>
+</request>
+<response>
+<representation element="proxy:LocationList"/>
+</response>
+</method>
+</resource>
+</resources>
+</application>

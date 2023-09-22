@@ -1,0 +1,116 @@
+<application xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd">
+<resources base="https://cdt.hafas.de/opendata/apiserver/">
+<resource path="departureBoard">
+<method name="GET">
+<request>
+<param name="accessId" required="true" style="query" type="xsd:string">
+<doc>
+Access ID for identifying the requesting client.
+</doc>
+</param>
+<param name="requestId" required="false" style="query" type="xsd:string">
+<doc>
+Request ID for identifying the request.
+</doc>
+</param>
+<param name="format" required="false" style="query" type="xsd:string">
+<doc>
+Requested response format. If not set, the Accept-Header is used. If both are missing application/xml is used
+</doc>
+</param>
+<param name="jsonpCallback" required="false" style="query" type="xsd:string">
+<doc>
+Requests the JSON response data is wrapped into a JavaScript function with that name.
+</doc>
+</param>
+<param default="deu" name="lang" required="false" style="query" type="xsd:string">
+<doc>
+The language of the journey planer.
+</doc>
+</param>
+<param name="id" required="false" style="query" type="xsd:string">
+<doc>
+Specifies the station/stop ID for which the departures shall be retrieved. Required if extId is not present.
+</doc>
+</param>
+<param name="extId" required="false" style="query" type="xsd:string">
+<doc>
+Deprecated. Please use `id` as it supports external IDs. Specifies the external station/stop ID for which the departures shall be retrieved. Required if id is not present.
+</doc>
+</param>
+<param name="direction" required="false" style="query" type="xsd:string">
+<doc>
+If only vehicles departing or arriving from a certain direction shall be returned, specify the direction by giving the station/stop ID of the last stop on the journey.
+</doc>
+</param>
+<param name="date" required="false" style="query" type="xsd:string">
+<doc>
+Sets the start date for which the departures shall be retrieved. Represented in the format YYYY-MM-DD.
+</doc>
+</param>
+<param name="time" required="false" style="query" type="xsd:string">
+<doc>
+Sets the start time for which the departures shall be retrieved. Represented in the format hh:mm[:ss] in 24h nomenclature. Seconds will be ignored for requests.
+</doc>
+</param>
+<param name="dur" required="false" style="query" type="xsd:int">
+<doc> Range from 0 to 1439. </doc>
+</param>
+<param default="60" name="duration" required="false" style="query" type="xsd:int">
+<doc>
+Set the interval size in minutes. Range from 0 to 1439.
+</doc>
+</param>
+<param default="-1" name="maxJourneys" required="false" style="query" type="xsd:int">
+<doc>
+Maximum number of journeys to be returned. If no value is defined or -1, all departing/arriving services within the duration sized period are returned.
+</doc>
+</param>
+<param name="products" required="false" style="query" type="xsd:int">
+<doc>
+Decimal value defining the product classes to be included in the search. It represents a bitmask combining bit number of a product as defined in the HAFAS raw data file zugart.
+</doc>
+</param>
+<param name="operators" required="false" style="query" type="xsd:string">
+<doc>
+Only journeys provided by the given operators are part of the result. To filter multiple operators, separate the codes by comma. If the operator should not be part of the be trip, negate it by putting ! in front of it.
+</doc>
+</param>
+<param name="lines" required="false" style="query" type="xsd:string">
+<doc>
+Only journeys running the given line are part of the result. To filter multiple lines, separate the codes by comma. If the line should not be part of the be trip, negate it by putting ! in front of it.
+</doc>
+</param>
+<param default="true" name="filterEquiv" required="false" style="query" type="xsd:int">
+<doc>
+Enables/disables the filtering of equivalent marked stops.
+</doc>
+</param>
+<param name="attributes" required="false" style="query" type="xsd:string">
+<doc>
+Filter boards by one or more attribute codes of a journey. Multiple attribute codes are separated by comma. If the attribute should not be part of the result, negate it by putting ! in front of it.
+</doc>
+</param>
+<param name="platforms" required="false" style="query" type="xsd:string">
+<doc>
+Filter boards by platform. Multiple platforms are separated by comma.
+</doc>
+</param>
+<param name="rtMode" required="false" style="query" type="xsd:string">
+<doc>
+Set the realtime mode to be used if enabled.
+</doc>
+</param>
+<param default="false" name="passlist" required="false" style="query" type="xsd:int">
+<doc>
+Include a list of all passed waystops?
+</doc>
+</param>
+</request>
+<response>
+<representation element="proxy:DepartureBoard"/>
+</response>
+</method>
+</resource>
+</resources>
+</application>
